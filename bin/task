@@ -21,7 +21,7 @@ if (empty($loader)) {
 }
 
 try {
-    $project = (new Task\ProjectFinder)->find();
+    $project = (new ProjectFinder)->find();
 } catch (Exception $ex) {
     (new Application)->renderException($ex, new ConsoleOutput);
     exit(1);
