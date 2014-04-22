@@ -1,0 +1,25 @@
+{
+    "name": "task/cli",
+    "description": "CLI for Task",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mike Fisher",
+            "email": "mike@mbfisher.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "symfony/console": "~2.4"
+    },
+    "require-dev": {
+        "task/task": "dev-master",
+        "phpunit/phpunit": "~4.0"
+    },
+    "bin": ["bin/task"],
+    "autoload": {
+        "psr-4": {
+            "Task\\Cli\\": "src/"
+        }
+    }
+}
