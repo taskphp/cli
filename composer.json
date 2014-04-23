@@ -11,7 +11,8 @@
     "minimum-stability": "dev",
     "require-dev": {
         "task/task": "dev-master",
-        "phpunit/phpunit": "~4.0"
+        "phpunit/phpunit": "~4.0",
+        "kherge/box": "~2.0"
     },
     "bin": ["bin/task"],
     "autoload": {

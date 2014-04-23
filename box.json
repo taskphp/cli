@@ -1,0 +1,11 @@
+{
+    "chmod": "0755",
+    "directories": [
+        "build/vendor",
+        "build/src"
+    ],
+    "git-version": "package_version",
+    "main": "build/bin/task",
+    "output": "build/task.phar",
+    "stub": true
+}
