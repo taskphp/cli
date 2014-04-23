@@ -1,13 +1,9 @@
 #!/usr/bin/env php
 <?php
 
-use Task\Cli\ProjectFinder;
-use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Output\ConsoleOutput;
-
 $loader = null;
 foreach ([
-    __DIR__.'/../../../autoload.php', # COMPOSER_HOME/vendor/task/task/bin
+    __DIR__.'/../../../autoload.php', # COMPOSER_HOME/vendor/task/cli/bin
     __DIR__.'/../vendor/autoload.php' # ./bin
 ] as $autoload) {
     if (file_exists($autoload)) {
@@ -21,9 +17,9 @@ if (empty($loader)) {
 }
 
 try {
-    $project = (new ProjectFinder)->find();
+    $project = (new Task\Cli\ProjectFinder)->find();
 } catch (Exception $ex) {
-    (new Application)->renderException($ex, new ConsoleOutput);
+    fwrite(STDERR, $ex->getMessage());
     exit(1);
 }
 
