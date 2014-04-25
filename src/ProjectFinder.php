@@ -9,7 +9,7 @@ class ProjectFinder
     public function find($taskfile = './Taskfile')
     {
         if (!file_exists($taskfile)) {
-            throw new \RuntimeException("$taskfile not found");
+            throw new \InvalidArgumentException("$taskfile not found");
         }
 
         if (filesize($taskfile) === 0) {
@@ -20,7 +20,7 @@ class ProjectFinder
 
         $cls = 'Task\Project';
         if (!($project instanceof $cls)) {
-            throw new \InvalidArgumentException("Taskfile must return a Project");
+            throw new \LogicException("Taskfile must return a Project");
         }
 
         return $project;
