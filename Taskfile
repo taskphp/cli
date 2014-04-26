@@ -10,6 +10,7 @@ $project->inject(function ($container) {
     $container['fs'] = new Plugin\FilesystemPlugin;
     $container['ps'] = new Plugin\ProcessPlugin;
     $container['box'] = new Plugin\BoxPlugin;
+    $container['phpunit'] = new Plugin\PHPUnitPlugin;
 });
 
 $project->addTask('build', ['build.clean', 'build.prepare', 'build.phar']);
@@ -35,6 +36,12 @@ $project->addTask('build.prepare', ['fs', 'ps', function ($fs, $ps) {
 
 $project->addTask('build.phar', ['box', function ($box) {
     $box->command('build')->run($this->getOutput());
+}]);
+
+$project->addTask('test', ['phpunit', function ($phpunit) {
+    $phpunit->getCommand()
+        ->setConfiguration($this->getProperty('config', 'phpunit.xml'))
+        ->pipe($this->getOutput());
 }]);
 
 return $project;

@@ -8,13 +8,12 @@
             "email": "mike@mbfisher.com"
         }
     ],
-    "minimum-stability": "dev",
     "require-dev": {
         "task/task": "~0.1",
+        "task/phpunit": "~0.1",
         "task/filesystem": "~0.1",
         "task/process": "~0.1",
         "task/box": "~0.1",
-        "phpunit/phpunit": "~4.0",
         "kherge/box": "~2.0"
     },
     "bin": ["bin/task"],
