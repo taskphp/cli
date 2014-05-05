@@ -1,7 +1,8 @@
 task/cli
 ========
 
-CLI for Task.
+[![Build Status](https://travis-ci.org/taskphp/cli.svg?branch=master)](https://travis-ci.org/taskphp/cli)
+[![Coverage Status](https://coveralls.io/repos/taskphp/cli/badge.png?branch=master)](https://coveralls.io/r/taskphp/cli?branch=master)
 
 Installation
 ============
