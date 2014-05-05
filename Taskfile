@@ -7,10 +7,16 @@ use Task\Plugin;
 $project = new Task\Project('task/cli');
 
 $project->inject(function ($container) {
+    $container['phpunit'] = new Plugin\PHPUnitPlugin;
     $container['fs'] = new Plugin\FilesystemPlugin;
     $container['ps'] = new Plugin\ProcessPlugin;
     $container['box'] = new Plugin\BoxPlugin;
 });
+
+$project->addTask('test', ['phpunit', function ($phpunit) {
+    $phpunit->getCommand('./vendor/bin/phpunit')
+        ->pipe($this->getOutput());
+}]);
 
 $project->addTask('build', ['build.clean', 'build.prepare', 'build.phar']);
 

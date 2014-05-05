@@ -5,8 +5,8 @@
         </testsuite>
     </testsuites>
     <logging>
-        <log type="coverage-html" target="tests/reports/" charset="UTF-8" />
-        <log type="coverage-text" target="php://stdout" />
+        <log type="coverage-html" target="coverage" charset="UTF-8" />
+        <log type="coverage-clover" target="coverage.xml" charset="UTF-8" />
     </logging>
     <filter>
         <whitelist>
