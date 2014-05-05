@@ -15,7 +15,7 @@
         "task/box": "~0.1",
         "task/phpunit": "~0.1",
         "kherge/box": "~2.0",
-        "satooshi/coveralls": "~0.6"
+        "satooshi/php-coveralls": "~0.6"
     },
     "bin": ["bin/task"],
     "autoload": {

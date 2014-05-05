@@ -3,6 +3,7 @@
 require 'vendor/autoload.php';
 
 use Task\Plugin;
+use Symfony\Component\Finder\Finder;
 
 $project = new Task\Project('task/cli');
 
@@ -21,26 +22,29 @@ $project->addTask('test', ['phpunit', function ($phpunit) {
 $project->addTask('build', ['build.clean', 'build.prepare', 'build.phar']);
 
 $project->addTask('build.clean', ['fs', function ($fs) {
-    $this->getOutput()->writeln("Cleaning...");
     $fs->remove('./build');
 }]);
 
 $project->addTask('build.prepare', ['fs', 'ps', function ($fs, $ps) {
     $output = $this->getOutput();
+    $base = __DIR__;
+    $build = "$base/build";
 
-    $output->writeln("Copying source...");
-    $fs->copyTree('.', './build', [
-        'src/**',
-        'bin/**',
-        'composer.json'
-    ]);
+    $finder = (new Finder)
+        ->in("$base/src")
+        ->in("$base/bin")
+        ->append(["$base/composer.json"]);
 
-    $output->writeln("Installing dependencies...");
-    $ps->run('composer', ['install', '--no-dev', '--prefer-dist'], './build');
+    $fs->mkdir($build);
+    $fs->mirror($base, $build, $finder);
+
+    $ps->build('composer', ['install', '--no-dev', '--prefer-dist'])
+        ->setWorkingDirectory($build)
+        ->pipe($output);
 }]);
 
 $project->addTask('build.phar', ['box', function ($box) {
-    $box->command('build')->run($this->getOutput());
+    $box->command('build')->pipe($this->getOutput());
 }]);
 
 return $project;
