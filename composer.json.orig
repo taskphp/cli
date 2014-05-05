@@ -1,0 +1,31 @@
+{
+    "name": "task/cli",
+    "description": "CLI for Task",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mike Fisher",
+            "email": "mike@mbfisher.com"
+        }
+    ],
+    "require-dev": {
+        "task/task": "~0.1",
+        "task/phpunit": "~0.1",
+        "task/filesystem": "~0.1",
+        "task/process": "~0.1",
+        "task/box": "~0.1",
+<<<<<<< HEAD
+        "task/phpunit": "~0.1",
+        "kherge/box": "~2.0",
+        "satooshi/php-coveralls": "~0.6"
+=======
+        "kherge/box": "~2.0"
+>>>>>>> 14b0effac33179b5ee04ab58d29626220bd87d4d
+    },
+    "bin": ["bin/task"],
+    "autoload": {
+        "psr-4": {
+            "Task\\Cli\\": "src/"
+        }
+    }
+}
