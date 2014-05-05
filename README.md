@@ -37,3 +37,9 @@ $> chmod +x /usr/bin/task
 ...
 ```
 Run at `./vendor/bin/task`.
+
+Testing
+=======
+
+When running the package tests, make sure to use the local install of Task CLI and not 
+the global TaskPHP CLI install. e.g. './bin/task test'
