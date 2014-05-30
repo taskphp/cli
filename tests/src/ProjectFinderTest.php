@@ -6,37 +6,34 @@ class ProjectFinderTest extends \PHPUnit_Framework_TestCase
 {
     public function testFind()
     {
-        $taskfile = __DIR__.'/../fixtures/Taskfile';
-        $project = (new ProjectFinder)->find($taskfile);
-        $this->assertEquals(require $taskfile, $project);
+        $dir = dirname(__DIR__) . '/fixtures/valid-taskfile';
+        
+        $taskfile = $dir . '/Taskfile';
+        
+        $expected = require $taskfile;
+        
+        $actual = (new ProjectFinder($dir))->find();
+        
+        $this->assertEquals($expected, $actual);
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException RuntimeException
      */
     public function testFindThrowsOnNoTaskFile()
     {
-        (new ProjectFinder)->find('nope');
+        $dir = dirname(__DIR__) . '/fixtures/no-taskfile';
+        
+        (new ProjectFinder($dir))->find();
     }
 
     /**
-     * @expectedException LogicException
-     */
-    public function testFindThrowsOnEmptyTaskFile()
-    {
-        $taskfile = tempnam(sys_get_temp_dir(), 'taskfile');
-        (new ProjectFinder)->find($taskfile);
-        unlink($taskfile);
-    }
-
-    /**
-     * @expectedException LogicException
+     * @expectedException UnexpectedValueException
      */
     public function testFindThrowsOnNotProject()
     {
-        $taskfile = tempnam(sys_get_temp_dir(), 'taskfile');
-        file_put_contents($taskfile, '<?php return "foo";');
-        (new ProjectFinder)->find($taskfile);
-        unlink($taskfile);
+        $dir = dirname(__DIR__) . '/fixtures/invalid-taskfile';
+        
+        (new ProjectFinder($dir))->find();
     }
 }
