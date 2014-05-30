@@ -37,6 +37,9 @@ class ProjectFinder
         return $taskfile;
     }
     
+    /**
+     * @return \Task\Project
+     */
     public function find()
     {
         $taskfile = $this->findTaskfile();
