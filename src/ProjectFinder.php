@@ -7,60 +7,59 @@ use Task\Project;
 class ProjectFinder
 {
     /**
+     * Directory to search for Taskfiles
+     *
+     * @var string
+     */
+    private $cwd;
+
+    /**
      * Taskfile basename variants, in priority order.
      * 
      * @var array
      */
     private $variants = ['Taskfile', 'taskfile', 'taskfile.php'];
     
+    public function __construct($cwd = null)
+    {
+        $this->cwd = $cwd ?: getcwd();
+    }
+
+    public function getCwd()
+    {
+        return $this->cwd;
+    }
+
     /**
-     * @return string|null
+     * @return string|false
      */
     public function findTaskfile()
     {
-        $taskfile = null;
-        
-        $cwd = getcwd();
-        
-        foreach($this->variants as $variant)
-        {
-            $file = $cwd . DIRECTORY_SEPARATOR . $variant;
+        foreach ($this->variants as $variant) {
+            $file = $this->getCwd() . DIRECTORY_SEPARATOR . $variant;
             
-            if(is_file($file))
-            {
-                $taskfile = $file;
-                
-                break;
+            if (is_file($file)) {
+                return $file;
             }
         }
         
-        return $taskfile;
+        return false;
     }
     
     /**
-     * @return \Task\Project
+     * @return Task\Project
+     * @throws RuntimeException
      */
     public function find()
     {
-        $taskfile = $this->findTaskfile();
-        
-        // FIXME: This can go in findTaskfile() and then we can get rid of returning NULL.
-        if($taskfile === null)
-        {
-            throw new \InvalidArgumentException("$taskfile not found");
-        }
-
-        // FIXME: This is redundant, because return check below will handle this.
-        if(filesize($taskfile) === 0)
-        {
-            throw new \LogicException("Taskfile is empty");
+        if (!$taskfile = $this->findTaskfile()) {
+            throw new \RuntimeException("No Taskfile found");
         }
 
         $project = require $taskfile;
         
-        if(!($project instanceof \Task\Project))
-        {
-            throw new \LogicException("Taskfile must return an instance of '\Task\Project'");
+        if (!($project instanceof Project)) {
+            throw new \UnexpectedValueException("Taskfile must return an instance of 'Task\Project'");
         }
 
         return $project;
