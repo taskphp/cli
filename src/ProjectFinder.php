@@ -55,7 +55,7 @@ class ProjectFinder
 
         $project = require $taskfile;
         
-        if(!($project instanceof '\Task\Project'))
+        if(!($project instanceof \Task\Project))
         {
             throw new \LogicException("Taskfile must return an instance of '\Task\Project'");
         }
